@@ -20,7 +20,8 @@ self.addEventListener('fetch', (event) => {
   // Cache strategy: Stale-while-revalidate for API, Cache First for assets
   const url = new URL(event.request.url);
   
-  if (url.pathname.includes('/api/topanime')) {
+  // Check for both original API (dev) and proxy API (prod)
+  if (url.pathname.includes('/api/topanime') || url.pathname.includes('/api/anime')) {
      event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request)

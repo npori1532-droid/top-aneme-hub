@@ -1,6 +1,10 @@
 import { Anime } from '../types';
 
-const API_URL = 'https://wataru-api.vercel.app/api/topanime';
+// Use the local proxy in production to bypass CORS, but keep direct link for localhost if needed
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_URL = isLocal 
+  ? 'https://wataru-api.vercel.app/api/topanime' 
+  : '/api/anime';
 
 export const fetchTopAnime = async (): Promise<Anime[]> => {
   try {
