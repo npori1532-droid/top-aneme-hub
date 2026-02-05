@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = 'anime-hub-v1';
+const CACHE_NAME = 'anime-hub-v2'; // Bump version to force cache update
 const urlsToCache = [
   '/',
   '/index.html',
@@ -14,14 +14,14 @@ self.addEventListener('install', (event) => {
         return cache.addAll(urlsToCache);
       })
   );
+  self.skipWaiting();
 });
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
-  // Cache API requests (Direct or Proxy)
-  // Matching watauru-api and the proxy domain
-  if (url.pathname.includes('/api/topanime') || url.hostname.includes('allorigins.win')) {
+  // Cache API requests (Jikan API)
+  if (url.hostname.includes('api.jikan.moe')) {
      event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request)
@@ -63,4 +63,5 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
+  self.clients.claim();
 });
