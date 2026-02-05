@@ -17,16 +17,19 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Cache strategy: Stale-while-revalidate for API, Cache First for assets
   const url = new URL(event.request.url);
   
-  // Check for both original API (dev) and proxy API (prod)
-  if (url.pathname.includes('/api/topanime') || url.pathname.includes('/api/anime')) {
+  // Cache API requests (Direct or Proxy)
+  // Matching watauru-api and the proxy domain
+  if (url.pathname.includes('/api/topanime') || url.hostname.includes('allorigins.win')) {
      event.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return fetch(event.request)
           .then((response) => {
-            cache.put(event.request, response.clone());
+            // Only cache valid responses
+            if (response.status === 200) {
+              cache.put(event.request, response.clone());
+            }
             return response;
           })
           .catch(() => {
