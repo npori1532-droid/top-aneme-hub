@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = 'anime-hub-v3'; // Bump version to force cache update
+const CACHE_NAME = 'anime-hub-v4'; // Bump version to force cache update
 const urlsToCache = [
   '/',
   '/index.html',
