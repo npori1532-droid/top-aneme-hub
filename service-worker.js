@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = 'anime-hub-v5'; // CRITICAL: Bumped to v5 to clear broken cache
+const CACHE_NAME = 'anime-hub-v6'; // CRITICAL: Bumped to v6 to clear broken cache
 const urlsToCache = [
   '/',
   '/index.html',
