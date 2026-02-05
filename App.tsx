@@ -27,9 +27,11 @@ const App: React.FC = () => {
       try {
         const data = await fetchTopAnime();
         setAnimeList(data);
+        setError(null);
       } catch (err) {
+        console.error("Data load error:", err);
         setError("Failed to load anime data. Please check your connection.");
-      } else {
+      } finally {
         setLoading(false);
       }
     };
@@ -105,7 +107,7 @@ const App: React.FC = () => {
     );
   }
 
-  if (error) {
+  if (error && animeList.length === 0) {
     return (
         <div className="min-h-screen bg-darker flex items-center justify-center text-white">
             <div className="text-center p-8 bg-card rounded-xl border border-red-500/30">
